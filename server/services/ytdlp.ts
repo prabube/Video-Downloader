@@ -9,7 +9,7 @@ export function detectPlatform(url: string): PlatformId {
   if (lowercase.includes('instagram.com')) return 'instagram';
   if (lowercase.includes('twitter.com') || lowercase.includes('x.com')) return 'twitter';
   if (lowercase.includes('facebook.com') || lowercase.includes('fb.watch')) return 'facebook';
-  if (lowercase.includes('threads.net')) return 'threads';
+  if (lowercase.includes('threads.net') || lowercase.includes('threads.com')) return 'threads';
   if (lowercase.includes('pinterest.com') || lowercase.includes('pin.it')) return 'pinterest';
   return 'generic';
 }
@@ -23,6 +23,12 @@ export function categorizeError(stderr: string): { category: ErrorCategory; mess
     .trim();
 
   const lower = cleanedStderr.toLowerCase();
+  if (lower.includes('empty media response') || (lower.includes('unsupported url') && lower.includes('threads'))) {
+    return {
+      category: 'INVALID_URL',
+      message: 'This post appears to be an image or photo post without an embedded video stream. Please provide a video or reel link.'
+    };
+  }
   if (lower.includes('private') || lower.includes('this video is private')) {
     return {
       category: 'PRIVATE_VIDEO',
@@ -38,7 +44,7 @@ export function categorizeError(stderr: string): { category: ErrorCategory; mess
   if (lower.includes('sign in to confirm') || lower.includes('bot') || lower.includes('captcha') || lower.includes('challenge')) {
     return {
       category: 'BOT_RESTRICTED',
-      message: 'The platform challenged the server with a bot detection checkpoint. Using platform cookies or rotational proxies is recommended.'
+      message: 'The platform challenged the server with a bot detection checkpoint. Click "Configure Cookies" in Engine Status to add YouTube session cookies.'
     };
   }
   if (lower.includes('age') || lower.includes('age-restricted') || lower.includes('requires login')) {

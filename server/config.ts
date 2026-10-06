@@ -27,7 +27,9 @@ export const CONFIG = {
   MAX_CONCURRENT_JOBS: process.env.MAX_CONCURRENT_JOBS ? parseInt(process.env.MAX_CONCURRENT_JOBS, 10) : 3,
   
   // Binary paths
-  YT_DLP_PATH: process.env.YT_DLP_PATH || 'yt-dlp',
+  YT_DLP_PATH: fs.existsSync(path.resolve(process.cwd(), 'bin/yt-dlp'))
+    ? path.resolve(process.cwd(), 'bin/yt-dlp')
+    : (fs.existsSync('/usr/local/bin/yt-dlp') ? '/usr/local/bin/yt-dlp' : 'yt-dlp'),
   FFMPEG_PATH: process.env.FFMPEG_PATH || 'ffmpeg',
   FFMPEG_LOCATION: process.env.FFMPEG_LOCATION || (fs.existsSync('/usr/bin/ffmpeg') ? '/usr/bin' : 'ffmpeg'),
   

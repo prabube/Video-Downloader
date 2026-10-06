@@ -20,7 +20,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-red-400',
     borderColor: 'border-red-500/30',
     supportedTypes: ['Standard Videos', 'YouTube Shorts', '4K / 1080p DASH', 'Audio Only (MP3)'],
-    sampleUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    sampleUrl: 'https://youtube.com/shorts/ETm6rJKhbko?si=5k51x47W8ATc08A2'
   },
   tiktok: {
     id: 'tiktok',
@@ -40,7 +40,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-pink-400',
     borderColor: 'border-pink-500/30',
     supportedTypes: ['Reels', 'Feed Posts', 'IGTV'],
-    sampleUrl: 'https://www.instagram.com/reel/C3bJ0t6r6M6/'
+    sampleUrl: 'https://www.instagram.com/reel/Dd-1gHIy0CQ/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=='
   },
   twitter: {
     id: 'twitter',
@@ -50,7 +50,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-slate-300',
     borderColor: 'border-slate-500/30',
     supportedTypes: ['Video Tweets', 'X Media Clips', 'Spaces Recordings'],
-    sampleUrl: 'https://twitter.com/NASA/status/1678783456891392000'
+    sampleUrl: 'https://x.com/Sowmiyanbumani/status/2105908940072731019/video/1'
   },
   facebook: {
     id: 'facebook',
@@ -60,7 +60,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-blue-400',
     borderColor: 'border-blue-500/30',
     supportedTypes: ['Public Reels', 'Facebook Watch', 'Live Replays'],
-    sampleUrl: 'https://www.facebook.com/watch/?v=10153231379946729'
+    sampleUrl: 'https://www.facebook.com/share/v/1DgsDHgAza/'
   },
   threads: {
     id: 'threads',
@@ -70,7 +70,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-emerald-400',
     borderColor: 'border-emerald-500/30',
     supportedTypes: ['Threads Media', 'Video Clips'],
-    sampleUrl: 'https://www.threads.net/@zuck/post/CvK4sB2Lp8A'
+    sampleUrl: 'https://www.threads.com/@aninotunes.visuals/post/DeGpKHQD4qq?xmt=AQG0vFr15_UhRYqJlC3nMRvraqwMsdgSI62v17mP3ag8-g'
   },
   pinterest: {
     id: 'pinterest',
@@ -80,7 +80,7 @@ export const PLATFORMS_DATA: Record<PlatformId, PlatformInfo> = {
     badgeText: 'text-red-300',
     borderColor: 'border-red-600/30',
     supportedTypes: ['Video Pins', 'Idea Pins'],
-    sampleUrl: 'https://www.pinterest.com/pin/123456789012345678/'
+    sampleUrl: 'https://pin.it/19ZmuL9bJ'
   },
   generic: {
     id: 'generic',
@@ -111,7 +111,7 @@ export const PLATFORM_REGEXES: Record<PlatformId, RegExp[]> = {
     /^(https?:\/\/)?(www\.|m\.|web\.)?(facebook\.com|fb\.watch)\/(watch\/?\?v=\d+|reel\/\d+|[\w.]+\/videos\/\d+|\w+)/i
   ],
   threads: [
-    /^(https?:\/\/)?(www\.)?threads\.net\/@[\w.]+\/post\/[\w-]+/i
+    /^(https?:\/\/)?(www\.)?threads\.(net|com)\/@[\w.]+\/post\/[\w-]+/i
   ],
   pinterest: [
     /^(https?:\/\/)?([a-z]{2}\.)?(pinterest\.(com|[a-z]{2})|pin\.it)\/(pin\/\d+|[\w-]+)/i

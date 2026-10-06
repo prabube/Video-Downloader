@@ -209,34 +209,26 @@ export const UrlInputBar: React.FC<UrlInputBarProps> = ({
 
         {/* Quick Sample Presets Chips */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-          <span className="text-slate-500 dark:text-slate-400 mr-1">Quick test:</span>
+          <span className="text-slate-500 dark:text-slate-400 mr-1">Sample test links:</span>
           <button
             type="button"
-            onClick={() => handleSampleSelect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')}
+            onClick={() => handleSampleSelect('https://x.com/Sowmiyanbumani/status/2105908940072731019/video/1')}
             className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-            YouTube 4K
+            <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+            X / Twitter
           </button>
           <button
             type="button"
-            onClick={() => handleSampleSelect('https://www.youtube.com/shorts/50_4c5P4p5c')}
+            onClick={() => handleSampleSelect('https://www.facebook.com/share/v/1DgsDHgAza/')}
             className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
-            Shorts
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+            Facebook
           </button>
           <button
             type="button"
-            onClick={() => handleSampleSelect('https://www.tiktok.com/@tiktok/video/7106594312292453678')}
-            className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500"></span>
-            TikTok
-          </button>
-          <button
-            type="button"
-            onClick={() => handleSampleSelect('https://www.instagram.com/reel/C3bJ0t6r6M6/')}
+            onClick={() => handleSampleSelect('https://www.instagram.com/reel/Dd-1gHIy0CQ/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==')}
             className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
@@ -244,11 +236,27 @@ export const UrlInputBar: React.FC<UrlInputBarProps> = ({
           </button>
           <button
             type="button"
-            onClick={() => handleSampleSelect('https://twitter.com/NASA/status/1678783456891392000')}
+            onClick={() => handleSampleSelect('https://pin.it/19ZmuL9bJ')}
             className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-            X / Twitter
+            <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+            Pinterest
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSampleSelect('https://youtube.com/shorts/ETm6rJKhbko?si=5k51x47W8ATc08A2')}
+            className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            YouTube Short
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSampleSelect('https://www.threads.com/@aninotunes.visuals/post/DeGpKHQD4qq?xmt=AQG0vFr15_UhRYqJlC3nMRvraqwMsdgSI62v17mP3ag8-g')}
+            className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Threads
           </button>
         </div>
       </form>
