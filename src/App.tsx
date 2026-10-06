@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { AuthProvider, useAuth } from './firebase/authContext.js';
+import { LoginPage } from './components/LoginPage.js';
+import { AccessPendingView } from './components/AccessPendingView.js';
+import { AdminUserManagementModal } from './components/AdminUserManagementModal.js';
 import { Navbar } from './components/Navbar.js';
 import { UrlInputBar } from './components/UrlInputBar.js';
 import { MediaInspectorCard } from './components/MediaInspectorCard.js';
@@ -7,12 +11,26 @@ import { SupportedPlatformsGrid } from './components/SupportedPlatformsGrid.js';
 import { SystemHealthModal } from './components/SystemHealthDrawer.js';
 import { RecentDownloadsHistory } from './components/RecentDownloadsHistory.js';
 import { VideoMetadata, DownloadJob, SystemHealth } from './types/index.js';
-import { Film, Layers, Sparkles } from 'lucide-react';
+import { Film, Layers, Sparkles, Loader2 } from 'lucide-react';
 
 const LOCAL_STORAGE_KEY = 'omnistream_jobs_history';
 const THEME_STORAGE_KEY = 'omnistream_theme_mode';
 
-export default function App() {
+function MainAppContent() {
+  const { 
+    currentUser, 
+    profile, 
+    isAdmin, 
+    isApproved, 
+    loading: authLoading, 
+    authError, 
+    signInWithGoogle, 
+    signOut,
+    allowedUsers,
+    addAllowedUser,
+    removeAllowedUser,
+  } = useAuth();
+
   // Theme state: dark / light
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
@@ -61,6 +79,7 @@ export default function App() {
   const [isSystemHealthLoading, setIsSystemHealthLoading] = useState(false);
   const [isSystemHealthOpen, setIsSystemHealthOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isAdminUsersOpen, setIsAdminUsersOpen] = useState(false);
   const [isStartingJob, setIsStartingJob] = useState(false);
 
   // Sync history to localStorage
@@ -190,6 +209,41 @@ export default function App() {
     setJobHistory([]);
   };
 
+  // 1. Loading Authentication State
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center gap-3 text-slate-500">
+        <Loader2 className="w-8 h-8 animate-spin text-emerald-600 dark:text-emerald-400" />
+        <span className="text-xs font-semibold">Verifying authorization...</span>
+      </div>
+    );
+  }
+
+  // 2. Not Authenticated -> Show Login Page
+  if (!currentUser) {
+    return (
+      <LoginPage
+        onSignIn={signInWithGoogle}
+        isLoading={authLoading}
+        errorMessage={authError}
+      />
+    );
+  }
+
+  // 3. Authenticated but not approved by Admin -> Show Pending Approval Screen
+  if (!isApproved) {
+    return (
+      <AccessPendingView
+        userEmail={currentUser.email || ''}
+        userDisplayName={currentUser.displayName}
+        photoURL={currentUser.photoURL}
+        onRefresh={() => window.location.reload()}
+        onSignOut={signOut}
+      />
+    );
+  }
+
+  // 4. Authenticated & Approved -> Full OmniStream Application
   const runningJobsCount = activeJobs.filter(
     (j) =>
       j.status === 'queued' ||
@@ -200,15 +254,21 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200 selection:bg-emerald-500/20 selection:text-emerald-700 dark:selection:text-emerald-300">
-      {/* Top Navbar with Theme Toggle */}
+      {/* Top Navbar with Theme Toggle, Admin users button & Sign Out */}
       <Navbar
         systemHealth={systemHealth}
         recentCount={jobHistory.length}
         activeCount={runningJobsCount}
         theme={theme}
+        profile={profile}
+        userEmail={currentUser.email}
+        userPhoto={currentUser.photoURL}
+        isAdmin={isAdmin}
         onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
         onOpenSystemHealth={() => setIsSystemHealthOpen(true)}
         onOpenHistory={() => setIsHistoryOpen(true)}
+        onOpenAdminUsers={() => setIsAdminUsersOpen(true)}
+        onSignOut={signOut}
       />
 
       {/* Main Container */}
@@ -280,6 +340,15 @@ export default function App() {
         />
       </main>
 
+      {/* Admin User Access Management Modal */}
+      <AdminUserManagementModal
+        isOpen={isAdminUsersOpen}
+        onClose={() => setIsAdminUsersOpen(false)}
+        allowedUsers={allowedUsers}
+        onAddUser={addAllowedUser}
+        onRemoveUser={removeAllowedUser}
+      />
+
       {/* Diagnostics Modal */}
       <SystemHealthModal
         isOpen={isSystemHealthOpen}
@@ -308,14 +377,22 @@ export default function App() {
             <span>yt-dlp & FFmpeg container multiplexer</span>
           </div>
           <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
-            <span>Supports 4K UHD DASH</span>
+            <span>Google Auth RBAC</span>
             <span>·</span>
-            <span>320kbps MP3 Audio</span>
+            <span>4K UHD DASH</span>
             <span>·</span>
-            <span>Non-blocking queue</span>
+            <span>320kbps MP3</span>
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <MainAppContent />
+    </AuthProvider>
   );
 }

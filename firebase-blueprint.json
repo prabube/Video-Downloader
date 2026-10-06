@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and authorization details",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth user identifier"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Google email address of the user"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar URL"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "user"],
+          "description": "User authorization role"
+        },
+        "isApproved": {
+          "type": "boolean",
+          "description": "Whether user is approved by admin"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account creation"
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "ISO timestamp of last sign in"
+        }
+      },
+      "required": ["uid", "email", "role", "isApproved"]
+    },
+    "AllowedUser": {
+      "title": "AllowedUser",
+      "description": "Whitelisted Google email address permitted to access OmniStream",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Authorized email address"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "user"],
+          "description": "Assigned role"
+        },
+        "addedBy": {
+          "type": "string",
+          "description": "Email or UID of admin who authorized access"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp when authorization was granted"
+        }
+      },
+      "required": ["email", "role", "addedBy"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores user profiles and role state"
+    },
+    "/allowed_users/{emailId}": {
+      "schema": "AllowedUser",
+      "description": "Whitelist of authorized users managed by admins"
+    }
+  }
+}
