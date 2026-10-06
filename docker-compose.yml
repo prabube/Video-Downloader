@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnistream-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SCRATCH_DIR=/app/downloads_scratch
+      - RETENTION_MINUTES=20
+      - MAX_FILE_SIZE_MB=500
+      - MAX_DURATION_MINUTES=20
+      - MAX_CONCURRENT_JOBS=4
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - scratch_storage:/app/downloads_scratch
+      # Mount cookies.txt if available for bypass of platform bot checks:
+      # - ./cookies.txt:/app/cookies.txt:ro
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: omnistream-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+volumes:
+  scratch_storage:
+    driver: local
+  redis_data:
+    driver: local

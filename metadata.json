@@ -1,0 +1,6 @@
+{
+  "name": "OmniStream - HD Social Video Downloader",
+  "description": "Production-grade social video inspection and HD stream downloader powered by yt-dlp and ffmpeg for YouTube, TikTok, Instagram, X/Twitter, Facebook, Threads, and Pinterest.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
